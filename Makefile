@@ -2,9 +2,14 @@ CXXFLAGS = -O3 -I./utils/inc -D_FILE_OFFSET_BITS=64 -DCONSOLE_SUPPORTS_COLOR -Wa
 CXX = clang++
 LD = $(CXX)
 LIBS=-lpthread
+UNAME_S := $(shell uname -s)
 
 ifeq ($(CXX),clang++)
 	CXXFLAGS := $(CXXFLAGS) -stdlib=libc++
+    ifeq ($(UNAME_S),Linux)
+        LIBS += -lc++abi
+    endif
+
 endif
 
 all: ps3netsrv++
